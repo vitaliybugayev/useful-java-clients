@@ -78,6 +78,60 @@ src/
 
 All client packages contain a `UsageExample` class demonstrating basic usage. Below are quick references and setup notes.
 
+### MyBatis (`client.mybatis`)
+
+Files: `MyBatisClient`, `UserMapper`, `User`, `UsageExample`
+
+Notes:
+- Bring your own JDBC driver in the consuming app (e.g., PostgreSQL, MySQL).
+- Two options:
+- Programmatic: `MyBatisClient(driver, url, username, password)` and register mappers in code.
+- XML-based: put `mybatis-config.xml` on classpath and build with placeholders.
+
+Example:
+```java
+new client.mybatis.UsageExample().example();
+```
+
+XML config (src/main/resources/mybatis-config.xml):
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+  <environments default="development">
+    <environment id="development">
+      <transactionManager type="JDBC"/>
+      <dataSource type="POOLED">
+        <property name="driver" value="${driver}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${username}"/>
+        <property name="password" value="${password}"/>
+      </dataSource>
+    </environment>
+  </environments>
+  <mappers>
+    <package name="client.mybatis"/>
+  </mappers>
+}
+```
+
+Build client from XML in code:
+```java
+var props = new Properties();
+props.setProperty("driver", "org.postgresql.Driver");
+props.setProperty("url", "jdbc:postgresql://localhost:5432/app");
+props.setProperty("username", "user");
+props.setProperty("password", "pass");
+try (var client = new client.mybatis.MyBatisClient("mybatis-config.xml", props)) {
+  try (var session = client.openSession()) {
+    var mapper = session.getMapper(client.mybatis.UserMapper.class);
+    var u = mapper.selectById(1L);
+  }
+}
+```
+
 ### Gmail (`client.gmail`)
 
 Files: `GmailClient`, `UsageExample`

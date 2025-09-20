@@ -39,6 +39,7 @@
         <temporal-sdk.version>1.26.2</temporal-sdk.version>
         <bcprov-jdk15on.version>1.70</bcprov-jdk15on.version>
         <netty-tcnative-boringssl-static.version>2.0.69.Final</netty-tcnative-boringssl-static.version>
+        <mybatis.version>3.5.15</mybatis.version>
     </properties>
 
     <repositories>
@@ -165,6 +166,13 @@
             <groupId>io.netty</groupId>
             <artifactId>netty-tcnative-boringssl-static</artifactId>
             <version>${netty-tcnative-boringssl-static.version}</version>
+        </dependency>
+
+        <!-- MyBatis (core) -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>${mybatis.version}</version>
         </dependency>
     </dependencies>
 
