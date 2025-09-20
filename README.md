@@ -6,7 +6,7 @@ The repository favors simple, testable code and includes a `UsageExample` for ea
 
 ## Concept: Consume As A Dependency
 
-This project is intended to be published to a Maven repository (Maven Central or a private registry) and consumed as a library dependency from your applications. It is not a standalone application.
+This project is intended to be published to a private Maven registry and consumed as a library dependency from your applications. It is not a standalone application.
 
 - Coordinates (adjust to your org if needed):
   - `groupId`: `com.example`
@@ -29,11 +29,11 @@ Gradle (Kotlin DSL):
 implementation("com.example:useful-java-clients:1.0.0")
 ```
 
-If you publish to a private repository (e.g., Nexus/Artifactory/GitHub Packages), configure your repository in the consuming project accordingly.
+Publish this repository to your private registry (e.g., Nexus/Artifactory/GitHub Packages), and configure that repository in the consuming project accordingly.
 
 ## Requirements
 
-- Java 17+
+- Java 21+
 - Maven 3.8+
 
 ## Build & Test
@@ -47,7 +47,7 @@ If you publish to a private repository (e.g., Nexus/Artifactory/GitHub Packages)
 
 ### Publishing
 
-- Configure `distributionManagement` and (if required) signing/profile settings in `pom.xml` for your target repository.
+- Configure your private repository in `distributionManagement` (and credentials via `~/.m2/settings.xml`).
 - Deploy: `mvn -DskipTests deploy`
 
 Logging uses `slf4j-simple` and is configured by `src/main/resources/simplelogger.properties`.
